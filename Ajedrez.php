@@ -11,9 +11,14 @@ class Ajedrez{
 
 	protected $_tablero;
 
+	protected $_turno;
+
 	public function __construct(){
+		
 		// Inicializo el Tablero
 		$this->_tablero = new Tablero();
+
+		$this->_turno = 'blanco';
 
 		//Declaro las fichas negras
 		$alfilN = new Alfil('negro');
@@ -74,12 +79,36 @@ class Ajedrez{
 		$this->_tablero->dibujar();
 	}
 
-	public function mover($la_ficha,$Previous,$Posterior) {
-		$pos_anterior = explode(",", $Previous);
-		$pos_posterior = explode(",", $Posterior);
-
-		$this->_tablero->ponerFicha(NULL,$pos_anterior[0],$pos_anterior[1]);
-		$this->_tablero->ponerFicha($la_ficha,$pos_posterior[0],$pos_posterior[1]);
+	public function cambiarTurno() {
+		switch ($this->_turno) {
+			case 'blanco':
+				$this->_turno = 'negro';
+				break;
+			
+			case 'negro':
+				$this->_turno = 'blanco';
+				break;
+		}
 	}
 
+	public function mover($Previous,$Posterior) {
+		$pos_anterior = explode("-", $Previous);
+		$pos_posterior = explode("-", $Posterior);
+
+		$ficha = $this->_tablero->obtenerFicha($pos_anterior[0],$pos_anterior[1]);
+
+		if ($ficha->getColor() == $this->_turno) {
+			if ($ficha->puedeMover($Previous,$Posterior)) {
+				$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
+				$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
+				$this->cambiarTurno();
+			}
+		}
+		echo $ficha::closestPos($Previous,$Posterior);
+	}
+
+	public function show() {
+		return $this->_tablero->dibujar();
+	}
 }
+

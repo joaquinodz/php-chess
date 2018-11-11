@@ -5,6 +5,7 @@ class Tablero{
 	protected $_matriz;
 
 	public function __construct(){
+
 		#ver como crear un array de 8 ints consecutivos
 		$this->_matriz = array_fill(1, 8, "");
 		for($i=1;$i<=8;$i++){
@@ -18,7 +19,12 @@ class Tablero{
 			unset($this->_matriz[$fila][$columna]);
 		} else {
 			$this->_matriz[$fila][$columna] = $ficha;
+			$_SESSION['SavedGame'] = $this->_matriz;
 		}
+	}
+
+	public function obtenerFicha($fila,$columna) {
+		return $this->_matriz[$fila][$columna];
 	}
 
 	public function dibujar() {
@@ -32,9 +38,9 @@ class Tablero{
 			for($columna=1;$columna<=8;$columna++){
 				echo "<td class='celda' name='c".$columna."' id='c".$columna."'>";
 				 if($this->_matriz[$fila][$columna] == ''){
-					echo "<img src='img/blanco.png' /> <input class='pos' type='hidden' value='f".$fila.",c".$columna."'>";
-				}else{
-					echo "<img src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' /> <input class='pos' type='hidden' value='".$fila.",".$columna."'>";
+					echo "<img id='".$fila."-".$columna."' src='img/blanco.png' onclick='seleccionarCelda(this)'/>";
+				} else {
+					echo "<img id='".$fila."-".$columna."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' onclick='seleccionarCelda(this)' />";
 				}
 				echo '</td>';
 			}
