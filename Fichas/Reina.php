@@ -7,6 +7,10 @@ class Reina {
 	public function __construct($color) {
 		$this->_color = $color;
 	}
+	
+	public function __toString() {
+        return "Reina";
+	}
 
 	public function getColor() {
 		return $this->_color;

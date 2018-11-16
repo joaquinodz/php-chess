@@ -7,6 +7,10 @@ class Torre {
 		$this->_color = $color;
 	}
 
+	public function __toString() {
+        return "Torre";
+    }
+
 	public function getColor() {
 		return $this->_color;
 	}

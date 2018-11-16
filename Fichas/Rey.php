@@ -8,6 +8,10 @@ class Rey {
 		$this->_color = $color;
 	}
 
+	public function __toString() {
+        return "Rey";
+    }
+
 	public function getColor() {
 		return $this->_color;
 	}

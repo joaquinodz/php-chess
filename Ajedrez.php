@@ -11,6 +11,8 @@ class Ajedrez{
 
 	protected $_tablero;
 
+	protected $_jaque;
+
 	protected $_turno;
 
 	public function __construct(){
@@ -75,10 +77,6 @@ class Ajedrez{
 		
 	}
 
-	public function empezar(){
-		$this->_tablero->dibujar();
-	}
-
 	public function cambiarTurno() {
 		switch ($this->_turno) {
 			case 'blanco':
@@ -96,8 +94,9 @@ class Ajedrez{
 		$pos_posterior = explode("-", $Posterior);
 
 		$ficha = $this->_tablero->obtenerFicha($pos_anterior[0],$pos_anterior[1]);
-
+		
 		if ($ficha->getColor() == $this->_turno) {
+			
 			$posActual = $ficha::closestPos($Previous,$Posterior);
 			while ($posActual != $Posterior) {
 				$cur = explode('-', $posActual);

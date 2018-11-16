@@ -8,6 +8,10 @@ class Peon {
 		$this->_color = $color;
 	}
 
+	public function __toString() {
+        return "Peon";
+    }
+
 	public function getColor() {
 		return $this->_color;
 	}
