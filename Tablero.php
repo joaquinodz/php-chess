@@ -54,10 +54,16 @@ class Tablero{
 	}
 
 	public function checkFichas($ficha,$Prev,$Next) {
+		// Esta es la proxima posicion disponible para moverse
 		$posActual = $ficha::closestPos($Prev,$Next);
+		
 		while ($posActual != $Next) {
+			// Esta es la posicion sub-siguiente (esta variable se supone que se auto-incrementa con el WHILE)
+			$posActual = $ficha::closestPos($posActual,$Next);
 			$pos = explode('-', $posActual);
-			if ($this->obtenerFicha($pos[0],$pos[1]) <> '') {
+			if ($this->obtenerFicha($pos[0],$pos[1]) == '') {
+				return TRUE;
+			} else {
 				return FALSE;
 			}
 		}

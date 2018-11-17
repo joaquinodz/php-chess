@@ -72,8 +72,8 @@ class Alfil {
 		$to_x = $Hasta[0];
 		$to_y = $Hasta[1];
 
-		if ($this->_tablero->checkFichas($this,$From,$To) != FALSE) {
-			return TRUE;
+		if ($this->_tablero->checkFichas($this,$From,$To) == FALSE) {
+			return FALSE;
 		}
 		
 		// Impedir moverse como el caballo
