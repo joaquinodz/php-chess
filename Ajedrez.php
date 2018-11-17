@@ -96,15 +96,7 @@ class Ajedrez{
 		$ficha = $this->_tablero->obtenerFicha($pos_anterior[0],$pos_anterior[1]);
 		
 		if ($ficha->getColor() == $this->_turno) {
-			
-			$posActual = $ficha::closestPos($Previous,$Posterior);
-			while ($posActual != $Posterior) {
-				$cur = explode('-', $posActual);
-				if ($this->_tablero->obtenerFicha($cur[0],$cur[1]) <> '') {
-					return FALSE;
-				}
-			}
-
+			echo $this->_tablero->checkFichas($ficha,$Previous,$Posterior);
 			if ($ficha->puedeMover($Previous,$Posterior)) {
 				$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
 				$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);

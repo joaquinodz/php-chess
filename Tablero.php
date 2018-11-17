@@ -53,4 +53,13 @@ class Tablero{
 		echo json_encode($this->_matriz);
 	}
 
+	public function checkFichas($ficha,$Prev,$Next) {
+		$posActual = $ficha::closestPos($Prev,$Next);
+		while ($posActual != $Next) {
+			$pos = explode('-', $posActual);
+			if ($this->obtenerFicha($pos[0],$pos[1]) <> '') {
+				return FALSE;
+			}
+		}
+	}
 }
