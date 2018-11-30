@@ -59,7 +59,7 @@ class Tablero{
 		$return = TRUE;
 		while ($posActual != $Next) {
 			$pos = explode('-', $posActual);
-			
+
 			if ($this->obtenerFicha($pos[0],$pos[1]) != '') {
 				$return = FALSE;
 				break;
@@ -71,4 +71,22 @@ class Tablero{
 
 		return $return;
 	}
+
+	public function obtenerAllFichas($color) {
+		$result = array();
+		// Renderizo las filas de las tablas
+		for($fila=1;$fila<=8;$fila++){
+		
+			// Renderizo las columnas
+			for($columna=1;$columna<=8;$columna++){
+				$ficha= $this->obtenerFicha($fila,$columna);
+				
+				if ($ficha != '' && $ficha->getColor() == $color) {
+					$result[] = array('ficha'=>$ficha,'pos'=>$fila.'-'.$columna);
+				}
+			}
+		}
+		return $result;
+	}
+
 }

@@ -59,10 +59,32 @@ class Rey {
 			return $x."-".$y;
 		}
 
-		// Si se mueve para la izquierda
+		// Si se mueve para la derecha
 		if ($from_x == $to_x && $from_y < $to_y) {
 			$x= $from_x;
 			$y= $from_y+1;
+			return $x."-".$y;
+		}
+
+		// Se mueve en diagonal [SE]
+		if ($from_x<$to_x && $from_y<$to_y) {
+			$x= $from_x+1;
+			$y= $from_y+1;
+			return $x."-".$y;
+		// Se mueve en diagonal [SO]
+		} elseif ($from_x<$to_x && $from_y>$to_y) {
+			$x= $from_x+1;
+			$y= $from_y-1;
+			return $x."-".$y;
+		// Se mueve en diagonal [NE]
+		} elseif ($from_x>$to_x && $from_y<$to_y) {
+			$x= $from_x-1;
+			$y= $from_y+1;
+			return $x."-".$y;
+		// Se mueve en diagonal [NO]
+		} elseif ($from_x>$to_x && $from_y>$to_y) {
+			$x= $from_x-1;
+			$y= $from_y-1;
 			return $x."-".$y;
 		}
 	}
@@ -93,6 +115,8 @@ class Rey {
 			($to_x == $from_x+1 && $to_y == $from_y+1)) {
 			return TRUE;
 		}
+
+		return FALSE;
 	}
 }
 ?>

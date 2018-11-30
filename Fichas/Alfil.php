@@ -1,12 +1,11 @@
 <?php
 
 class Alfil {
-	protected $_tablero;
+
 	protected $_color;
 
 	public function __construct($color) {
 		$this->_color = $color;
-		$this->_tablero = new Tablero();
 	}
 
 	public function __toString() {

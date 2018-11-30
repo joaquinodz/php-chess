@@ -13,6 +13,8 @@ class Ajedrez{
 
 	protected $_jaque;
 
+	private $_reyes = array('b' => "8-5", 'n' => "1-5");
+
 	protected $_turno;
 
 	public function __construct(){
@@ -80,12 +82,47 @@ class Ajedrez{
 	public function cambiarTurno() {
 		switch ($this->_turno) {
 			case 'blanco':
-				$this->_turno = 'negro';
-				break;
+			$this->_turno = 'negro';
+			break;
 			
 			case 'negro':
-				$this->_turno = 'blanco';
-				break;
+			$this->_turno = 'blanco';
+			break;
+		}
+	}
+
+	// Chequeo si UNA ficha puede comerse al rey
+	public function checkSingleJaque($ficha,$Pos) {
+
+		if ($this->_turno == 'blanco') {
+			$Target = $this->_reyes['b'];
+		} else {
+			$Target = $this->_reyes['n'];
+		}
+
+		if ($ficha->puedeMover($Pos,$Target) && $this->_tablero->checkFichas($ficha,$Pos,$Target)) {
+			$this->_jaque = TRUE;
+			return TRUE;
+		} else {
+			$this->_jaque = FALSE;
+			return FALSE;
+		}
+		
+	}
+
+	// Chequeo si CUALQUIERA de las fichas amenaza al rey 
+	public function checkGlobalJaque() {
+
+		if ($this->_turno == 'blanco') {
+			$fichas = $this->_tablero->obtenerAllFichas('negro');
+		} elseif ($this->_turno == 'negro') {
+			$fichas = $this->_tablero->obtenerAllFichas('blanco');
+		}
+		
+		foreach($fichas as $ficha) { 
+			if ($this->checkSingleJaque($ficha['ficha'],$ficha['pos'])) {
+				return TRUE;
+			}
 		}
 	}
 
@@ -106,6 +143,8 @@ class Ajedrez{
 					$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
 					$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
 					$this->cambiarTurno();
+					$this->checkGlobalJaque();
+					echo "JAQUE " . $this->_jaque ;
 				}
 			}
 		}
