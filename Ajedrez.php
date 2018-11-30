@@ -95,11 +95,18 @@ class Ajedrez{
 
 		$ficha = $this->_tablero->obtenerFicha($pos_anterior[0],$pos_anterior[1]);
 		
+		// ¿ Es mi turno ?
 		if ($ficha->getColor() == $this->_turno) {
+			// ¿ El movimiento es válido ?
 			if ($ficha->puedeMover($Previous,$Posterior)) {
-				$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
-				$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
-				$this->cambiarTurno();
+				// ¿ Hay una ficha en el camino ?
+				if ($this->_tablero->checkFichas($ficha,$Previous,$Posterior) == FALSE) {
+					return FALSE;
+				} else {
+					$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
+					$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
+					$this->cambiarTurno();
+				}
 			}
 		}
 	}
