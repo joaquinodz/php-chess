@@ -38,9 +38,9 @@ class Tablero{
 			for($columna=1;$columna<=8;$columna++){
 				echo "<td class='celda' name='c".$columna."' id='c".$columna."'>";
 				 if($this->_matriz[$fila][$columna] == ''){
-					echo "<img id='".$fila."-".$columna."' src='img/blanco.png' onclick='seleccionarCelda(this)'/>";
+					echo "<img id='".$fila."-".$columna."' src='img/blanco.png'/>";
 				} else {
-					echo "<img id='".$fila."-".$columna."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' onclick='seleccionarCelda(this)' />";
+					echo "<img id='".$fila."-".$columna."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' />";
 				}
 				echo '</td>';
 			}

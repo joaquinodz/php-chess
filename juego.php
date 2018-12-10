@@ -25,10 +25,12 @@
 			$ajedrez = $_SESSION['ajedrez'];
 		}
 
-		if (isset($_POST['submit'])) {
-			$ajedrez->mover($_POST['PrevPos'],$_POST['PostPos']);
+		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
+		{
+			require_once 'ajax.php';
+			$ajedrez->mover($PosInicial,$PosDestino);
 		}
-
+		
 		$_SESSION['ajedrez'] = $ajedrez;
 	?>
 	<br />
@@ -51,13 +53,43 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
-	function seleccionarCelda(celda) {
-		if ($("#PrevPos").val() == '') {
-			$("#PrevPos").val(celda.id);
-		} else {
-			$("#PostPos").val(celda.id);
-		}
-	}
 
+	$(document).ready(function() {
+
+		// Cargar valores iniciales
+		PrimeraPos = null
+		SegundaPos = null
+
+		// Para fines de desarrollo
+		console.log("Posición Inicial: "+PrimeraPos);
+		console.log("Posición Inicial: "+SegundaPos);
+
+		$("#tablero").click(function(event) {
+			event.preventDefault();
+
+			if (PrimeraPos == null) {
+				PrimeraPos = event.target.id;
+				console.log("Posición Inicial: " + PrimeraPos);
+			} else {
+				SegundaPos = event.target.id;
+				console.log("Posición Destino: " + SegundaPos);
+			}
+
+			if (PrimeraPos != null && SegundaPos != null) {
+				// Enviamos los datos vía AJAX
+				$.ajax({
+					url: 'ajax.php',
+					method: 'POST',
+					data: {PrevPos: PrimeraPos,
+							PostPos: SegundaPos},
+					success: function(response) {
+						console.log(response);
+					}
+				});
+				
+			}
+
+		});
+	});
 </script>
 </html>
