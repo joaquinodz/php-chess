@@ -94,11 +94,13 @@ class Ajedrez{
 	// Chequeo si UNA ficha puede comerse al rey
 	public function checkSingleJaque($ficha,$Pos) {
 
-		if ($this->_turno == 'blanco') {
-			$Target = $this->_reyes['b'];
-		} else {
-			$Target = $this->_reyes['n'];
-		}
+		
+			if ($this->_turno == 'blanco') {
+				$Target = $this->_reyes['b'];
+			} else {
+				$Target = $this->_reyes['n'];
+			}
+		
 
 		if ($ficha->puedeMover($Pos,$Target) && $this->_tablero->checkFichas($ficha,$Pos,$Target)) {
 			$this->_jaque = TRUE;
@@ -113,17 +115,22 @@ class Ajedrez{
 	// Chequeo si CUALQUIERA de las fichas amenaza al rey 
 	public function checkGlobalJaque() {
 
-		if ($this->_turno == 'blanco') {
-			$fichas = $this->_tablero->obtenerAllFichas('negro');
-		} elseif ($this->_turno == 'negro') {
-			$fichas = $this->_tablero->obtenerAllFichas('blanco');
-		}
+		
+			if ($this->_turno == 'blanco') {
+				$fichas = $this->_tablero->obtenerAllFichas('negro');
+			} elseif ($this->_turno == 'negro') {
+				$fichas = $this->_tablero->obtenerAllFichas('blanco');
+			}
+		
+		
 		
 		foreach($fichas as $ficha) { 
-			if ($this->checkSingleJaque($ficha['ficha'],$ficha['pos'])) {
+			if ($this->checkSingleJaque($ficha['ficha'],$ficha['pos'],$CheckMe)) {
+				
 				return TRUE;
 			}
 		}
+		return false;
 	}
 
 	public function mover($Previous,$Posterior) {
@@ -138,16 +145,40 @@ class Ajedrez{
 			if ($ficha->puedeMover($Previous,$Posterior)) {
 				// ¿ Hay una ficha en el camino ?
 				if ($this->_tablero->checkFichas($ficha,$Previous,$Posterior) == FALSE) {
-					return FALSE;
+					return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '');
 				} else {
 					$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
+					if ($this->checkGlobalJaque()) {
+						##GUARDAR LO QUE HABIA EN POSPOSTERIOR
+						$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
+						if ($this->checkGlobalJaque()) {
+							##DEJAR LO QUE ESTABA EN POSTPOSTERIOR
+							$this->_tablero->ponerFicha($ficha,$pos_anterior[0],$pos_anterior[1]);
+							return array('operation'=>TRUE,'jaque'=>FALSE,'mensaje'=>'Si moves eso estas en jaque');
+						}
+					}
 					$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
 					$this->cambiarTurno();
-					$this->checkGlobalJaque();
-					echo "JAQUE " . $this->_jaque ;
+					$jaque = $this->checkGlobalJaque();
+					$this->actualizarPosRey($ficha,$Posterior);
+					return array('operation'=>TRUE,'jaque'=>$jaque, 'mensaje' => '');
 				}
 			}
 		}
+	}
+
+	public function actualizarPosRey($ficha,$pos) {
+		if (get_class($ficha) == 'Rey') {
+			if ($ficha->getColor() == 'blanco') {
+				$this->_reyes['b'] = $pos;
+			} else {
+				$this->_reyes['n'] = $pos;
+			}
+		}
+	}
+
+	public function getTurno() {
+		return $this->_turno;
 	}
 
 	public function show() {

@@ -40,7 +40,7 @@ class Tablero{
 				 if($this->_matriz[$fila][$columna] == ''){
 					echo "<img id='".$fila."-".$columna."' src='img/blanco.png'/>";
 				} else {
-					echo "<img id='".$fila."-".$columna."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' />";
+					echo "<img id='".$fila."-".$columna."-".$this->_matriz[$fila][$columna]->getColor()."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' />";
 				}
 				echo '</td>';
 			}
@@ -58,6 +58,7 @@ class Tablero{
 		$posActual = $ficha::closestPos($Prev,$Next);
 		$return = TRUE;
 		while ($posActual != $Next) {
+
 			$pos = explode('-', $posActual);
 
 			if ($this->obtenerFicha($pos[0],$pos[1]) != '') {

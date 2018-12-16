@@ -71,17 +71,12 @@ class Alfil {
 		$to_x = $Hasta[0];
 		$to_y = $Hasta[1];
 		
-		// Impedir moverse como el caballo
-		if (($to_x == $from_x+2 || $to_x == $from_x-2) && ($to_y == $from_y+1 || $to_y == $from_y-1)) {
+		if (abs($to_x - $from_x) == abs($to_y - $from_y)) {
+			return TRUE;
+		}else{
 			return FALSE;
 		}
 
-		// Impedir moverse en linea recta
-		if (($from_x > $to_x || $from_x < $to_x) && ($from_y > $to_y || $from_y < $to_y)) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
 
 	}
 }
