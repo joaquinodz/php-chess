@@ -33,22 +33,33 @@ $_SESSION['ajedrez'] = $ajedrez;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Ajedrez</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 
-<?php echo $ajedrez->show(); ?>
-
-
-<body>
-
-	<form id="PosManager" action="" method="POST">
-		<input type="hidden" id="PrevPos" name="PrevPos" readonly ></input><br /><br />
-		<input type="hidden" id="PostPos" name="PostPos" readonly></input><br /><br />
-	</form>
-
-
+<body style="background-image:url('/img/background.jpg')">
+	<br />
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center" style="color: #41e8f4; font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; ">Ajedrez Online</h1>
+				<div class="alert alert-info" style="width: 11%;float: left;">Turno: <?php echo $ajedrez->getTurno(); ?></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<?php echo $ajedrez->show(); ?>
+				<form id="PosManager" action="" method="POST">
+					<input type="hidden" id="PrevPos" name="PrevPos" readonly ></input>
+					<input type="hidden" id="PostPos" name="PostPos" readonly></input>
+				</form>
+			</div>
+		</div>
+		<br/>
+		<div class="alert alert-info" id="errorMsj" style="display: none; width: auto; margin:0 auto;">Hola</div>
+	</div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 
 	$(document).ready(function() {
@@ -57,6 +68,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 		PrimeraPos = null
 		SegundaPos = null
 		Turno = "<?php echo $ajedrez->getTurno(); ?>"
+
 
 		// Para fines de desarrollo
 		console.log("Posición Inicial: "+PrimeraPos);
@@ -88,19 +100,21 @@ $_SESSION['ajedrez'] = $ajedrez;
 					data: {PrevPos: PrimeraPos,
 						PostPos: SegundaPos},
 						success: function(response) {
-							
 							var obj = jQuery.parseJSON( response );
 							if(obj.jaque == true){
 								alert('JAQUE');
 							}
-							if(obj.mensaje != ''){
-								alert(obj.mensaje);
+							if (obj.mensaje != '') {
+								$("#errorMsj").css('display','block');
+								$("#errorMsj").html(obj.mensaje);
+							} else {
+								$("#errorMsj").css('display','none');
+								$("#errorMsj").html('');
 							}
 							location.reload();
 						}
-					});
+				});
 			}
-
 		});
 	});
 </script>

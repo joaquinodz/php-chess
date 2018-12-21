@@ -95,11 +95,11 @@ class Ajedrez{
 	public function checkSingleJaque($ficha,$Pos) {
 
 		
-			if ($this->_turno == 'blanco') {
-				$Target = $this->_reyes['b'];
-			} else {
-				$Target = $this->_reyes['n'];
-			}
+		if ($this->_turno == 'blanco') {
+			$Target = $this->_reyes['b'];
+		} else {
+			$Target = $this->_reyes['n'];
+		}
 		
 
 		if ($ficha->puedeMover($Pos,$Target) && $this->_tablero->checkFichas($ficha,$Pos,$Target)) {
@@ -116,11 +116,11 @@ class Ajedrez{
 	public function checkGlobalJaque() {
 
 		
-			if ($this->_turno == 'blanco') {
-				$fichas = $this->_tablero->obtenerAllFichas('negro');
-			} elseif ($this->_turno == 'negro') {
-				$fichas = $this->_tablero->obtenerAllFichas('blanco');
-			}
+		if ($this->_turno == 'blanco') {
+			$fichas = $this->_tablero->obtenerAllFichas('negro');
+		} elseif ($this->_turno == 'negro') {
+			$fichas = $this->_tablero->obtenerAllFichas('blanco');
+		}
 		
 		
 		
@@ -163,9 +163,13 @@ class Ajedrez{
 					$this->actualizarPosRey($ficha,$Posterior);
 					return array('operation'=>TRUE,'jaque'=>$jaque, 'mensaje' => '');
 				}
+			} else {
+				return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '¡Movimiento Inválido!');
 			}
+		} else {
+			return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '¡Aún no es tu turno, jugador '.$ficha->getColor().'!');
 		}
-	}
+	} 
 
 	public function actualizarPosRey($ficha,$pos) {
 		if (get_class($ficha) == 'Rey') {
@@ -185,4 +189,3 @@ class Ajedrez{
 		return $this->_tablero->dibujar();
 	}
 }
-
