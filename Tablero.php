@@ -28,7 +28,7 @@ class Tablero{
 	}
 
 	public function dibujar() {
-		echo "<table id='tablero' class='main' border=1 style='margin: 0 auto; background: url(''); '>";
+		echo "<table id='tablero' class='main' border=1 style='margin: 0 auto;'>";
 		
 		// Renderizo las filas de las tablas
 		for($fila=1;$fila<=8;$fila++){
