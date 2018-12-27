@@ -17,6 +17,8 @@ class Ajedrez{
 
 	protected $_turno;
 
+	public $estilo;
+
 	public function __construct(){
 		
 		// Inicializo el Tablero
@@ -114,7 +116,6 @@ class Ajedrez{
 
 	// Chequeo si CUALQUIERA de las fichas amenaza al rey 
 	public function checkGlobalJaque() {
-
 		
 		if ($this->_turno == 'blanco') {
 			$fichas = $this->_tablero->obtenerAllFichas('negro');
@@ -122,15 +123,12 @@ class Ajedrez{
 			$fichas = $this->_tablero->obtenerAllFichas('blanco');
 		}
 		
-		
-		
 		foreach($fichas as $ficha) { 
-			if ($this->checkSingleJaque($ficha['ficha'],$ficha['pos'],$CheckMe)) {
-				
+			if ($this->checkSingleJaque($ficha['ficha'],$ficha['pos'])) {
 				return TRUE;
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 	public function mover($Previous,$Posterior) {
@@ -145,7 +143,7 @@ class Ajedrez{
 			if ($ficha->puedeMover($Previous,$Posterior)) {
 				// ¿ Hay una ficha en el camino ?
 				if ($this->_tablero->checkFichas($ficha,$Previous,$Posterior) == FALSE) {
-					return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '');
+					return array('operation'=>FALSE,'jaque'=>$this->_jaque, 'mensaje' => '');
 				} else {
 					$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
 					if ($this->checkGlobalJaque()) {
@@ -154,20 +152,20 @@ class Ajedrez{
 						if ($this->checkGlobalJaque()) {
 							##DEJAR LO QUE ESTABA EN POSTPOSTERIOR
 							$this->_tablero->ponerFicha($ficha,$pos_anterior[0],$pos_anterior[1]);
-							return array('operation'=>TRUE,'jaque'=>FALSE,'mensaje'=>'Si moves eso estas en jaque');
+							return array('operation'=>TRUE,'jaque'=>$this->_jaque,'mensaje'=>'Si moves eso estas en jaque');
 						}
 					}
 					$this->_tablero->ponerFicha($ficha,$pos_posterior[0],$pos_posterior[1]);
 					$this->cambiarTurno();
-					$jaque = $this->checkGlobalJaque();
+					$this->_jaque = $this->checkGlobalJaque();
 					$this->actualizarPosRey($ficha,$Posterior);
-					return array('operation'=>TRUE,'jaque'=>$jaque, 'mensaje' => '');
+					return array('operation'=>TRUE,'jaque'=>$this->_jaque, 'mensaje' => '');
 				}
 			} else {
-				return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '¡Movimiento Inválido!');
+				return array('operation'=>FALSE,'jaque'=>$this->_jaque, 'mensaje' => '¡Movimiento Inválido!');
 			}
 		} else {
-			return array('operation'=>FALSE,'jaque'=>$jaque, 'mensaje' => '¡Aún no es tu turno, jugador '.$ficha->getColor().'!');
+			return array('operation'=>FALSE,'jaque'=>$this->_jaque, 'mensaje' => '¡Aún no es tu turno, jugador '.$ficha->getColor().'!');
 		}
 	} 
 

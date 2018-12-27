@@ -4,6 +4,8 @@ class Caballo {
 
 	protected $_color;
 
+	public $estilo;
+
 	public function __construct($color) {
 		$this->_color = $color;
 	}

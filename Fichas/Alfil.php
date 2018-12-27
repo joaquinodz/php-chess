@@ -19,11 +19,11 @@ class Alfil {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-			return "img/alfil-b.png";
+				return "img/alfil-b.png";
 			break;
 			
 			case 'negro':
-			return "img/alfil-n.png";
+				return "img/alfil-n.png";
 			break;
 		}
 	}
