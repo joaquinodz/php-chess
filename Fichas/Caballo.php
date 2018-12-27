@@ -4,8 +4,11 @@ class Caballo {
 
 	protected $_color;
 
-	public function __construct($color) {
+	public $estilo;
+
+	public function __construct($color,$estilo) {
 		$this->_color = $color;
+		$this->estilo = $estilo;
 	}
 
 	public function __toString() {
@@ -19,11 +22,11 @@ class Caballo {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/caballo-b.png";
+				return "img/".$this->estilo."/caballo-b.png";
 				break;
 			
 			case 'negro':
-				return "img/caballo-n.png";
+				return "img/".$this->estilo."/caballo-n.png";
 				break;
 		}
 	}

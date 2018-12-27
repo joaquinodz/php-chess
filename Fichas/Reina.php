@@ -4,8 +4,11 @@ class Reina {
 
 	protected $_color;
 
-	public function __construct($color) {
+	public $estilo;
+
+	public function __construct($color,$estilo) {
 		$this->_color = $color;
+		$this->estilo = $estilo;
 	}
 	
 	public function __toString() {
@@ -19,11 +22,11 @@ class Reina {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/reina-b.png";
+				return "img/".$this->estilo."/reina-b.png";
 				break;
 			
 			case 'negro':
-				return "img/reina-n.png";
+				return "img/".$this->estilo."/reina-n.png";
 				break;
 		}
 	}

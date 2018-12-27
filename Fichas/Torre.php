@@ -3,8 +3,11 @@ class Torre {
 	
 	protected $_color;
 
-	public function __construct($color) {
+	public $estilo;
+
+	public function __construct($color,$estilo) {
 		$this->_color = $color;
+		$this->estilo = $estilo;
 	}
 
 	public function __toString() {
@@ -18,11 +21,11 @@ class Torre {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/torre-b.png";
+				return "img/".$this->estilo."/torre-b.png";
 				break;
 			
 			case 'negro':
-				return "img/torre-n.png";
+				return "img/".$this->estilo."/torre-n.png";
 				break;
 		}
 	}

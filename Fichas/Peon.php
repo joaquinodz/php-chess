@@ -4,8 +4,11 @@ class Peon {
 
 	protected $_color;
 
-	public function __construct($color) {
+	public $estilo;
+
+	public function __construct($color,$estilo) {
 		$this->_color = $color;
+		$this->estilo = $estilo;
 	}
 
 	public function __toString() {
@@ -19,11 +22,11 @@ class Peon {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/peon-b.png";
+				return "img/".$this->estilo."/peon-b.png";
 			break;
 			
 			case 'negro':
-				return "img/peon-n.png";
+				return "img/".$this->estilo."/peon-n.png";
 			break;
 		}
 	}

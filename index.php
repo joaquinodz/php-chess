@@ -48,14 +48,10 @@ $_SESSION['ajedrez'] = $ajedrez;
 		<div class="row">
 			<div class="col-md-12">
 				<?php echo $ajedrez->show(); ?>
-				<form id="PosManager" action="" method="POST">
-					<input type="hidden" id="PrevPos" name="PrevPos" readonly ></input>
-					<input type="hidden" id="PostPos" name="PostPos" readonly></input>
-				</form>
 			</div>
 		</div>
 		<br/>
-		<div class="alert alert-info" id="errorMsj" style="display: none; width: auto; margin:0 auto;">Hola</div>
+		<div class="alert alert-info" id="errorMsj" style="width: auto; margin:0 auto;"></div>
 	</div>
 </body>
 
@@ -95,7 +91,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 			if (PrimeraPos != null && SegundaPos != null) {
 				// Enviamos los datos vía AJAX
 				$.ajax({
-					url: 'juego.php',
+					url: 'index.php',
 					method: 'POST',
 					data: {PrevPos: PrimeraPos,
 						PostPos: SegundaPos},
@@ -103,13 +99,6 @@ $_SESSION['ajedrez'] = $ajedrez;
 							var obj = jQuery.parseJSON( response );
 							if(obj.jaque == true){
 								alert('JAQUE');
-							}
-							if (obj.mensaje != '') {
-								$("#errorMsj").css('display','block');
-								$("#errorMsj").html(obj.mensaje);
-							} else {
-								$("#errorMsj").css('display','none');
-								$("#errorMsj").html('');
 							}
 							location.reload();
 						}
