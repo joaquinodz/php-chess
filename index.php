@@ -36,7 +36,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 
-<body style="background-image:url('/img/background.jpg')">
+<body style="background-image:url('img/background.png')">
 	<br />
 	<div class="container-fluid">
 		<div class="row">
@@ -88,7 +88,10 @@ $_SESSION['ajedrez'] = $ajedrez;
 		if (PrimeraPos == null) {
 			// Compruebo que sea su turno
 			var Ficha = event.target.id.split("-");
-			if (Ficha[2] != Turno) { return false; }
+			if (Ficha[2] != Turno) { 
+				alert("¡Esperá a que sea tu turno!")
+				return false; 
+			}
 				
 			// Guardo la pos
 			PrimeraPos = event.target.id;
