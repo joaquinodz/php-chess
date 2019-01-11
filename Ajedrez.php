@@ -141,7 +141,7 @@ class Ajedrez{
 			if ($ficha->puedeMover($Previous,$Posterior)) {
 				// ¿ Hay una ficha en el camino ?
 				if ($this->_tablero->checkFichas($ficha,$Previous,$Posterior) == FALSE) {
-					return array('operation'=>FALSE,'jaque'=>$this->_jaque, 'mensaje' => '');
+					return array('operation'=>FALSE,'jaque'=>$this->_jaque, 'mensaje' => 'Esto no es damas... ¡Acá no podés saltear fichas!');
 				} else {
 					$this->_tablero->ponerFicha('',$pos_anterior[0],$pos_anterior[1]);
 					if ($this->checkGlobalJaque()) {
