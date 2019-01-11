@@ -56,55 +56,5 @@ $_SESSION['ajedrez'] = $ajedrez;
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-
-	$(document).ready(function() {
-
-		// Cargar valores iniciales
-		PrimeraPos = null
-		SegundaPos = null
-		Turno = "<?php echo $ajedrez->getTurno(); ?>"
-
-
-		// Para fines de desarrollo
-		console.log("Posición Inicial: "+PrimeraPos);
-		console.log("Posición Inicial: "+SegundaPos); 
-
-		$("#tablero").click(function(event) {
-			event.preventDefault();
-
-			console.log("Estas cliqueando: "+event.target.id);
-			
-			if (PrimeraPos == null) {
-				// Compruebo que sea su turno
-				var Ficha = event.target.id.split("-");
-				if (Ficha[2] != Turno) { return false; }
-				
-				// Guardo la pos
-				PrimeraPos = event.target.id;
-				console.log("Posición Inicial: " + PrimeraPos);
-			} else {
-				SegundaPos = event.target.id;
-				console.log("Posición Destino: " + SegundaPos);
-			}
-
-			if (PrimeraPos != null && SegundaPos != null) {
-				// Enviamos los datos vía AJAX
-				$.ajax({
-					url: 'index.php',
-					method: 'POST',
-					data: {PrevPos: PrimeraPos,
-						PostPos: SegundaPos},
-						success: function(response) {
-							var obj = jQuery.parseJSON( response );
-							if(obj.jaque == true){
-								alert('JAQUE');
-							}
-							location.reload();
-						}
-				});
-			}
-		});
-	});
-</script>
+<script src="game.js"></script>
 </html>

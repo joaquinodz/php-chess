@@ -4,8 +4,6 @@ class Caballo {
 
 	protected $_color;
 
-	public $estilo;
-
 	public function __construct($color) {
 		$this->_color = $color;
 	}
@@ -21,11 +19,11 @@ class Caballo {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/caballo-b.png";
+				return "img/default/caballo-b.png";
 				break;
 			
 			case 'negro':
-				return "img/caballo-n.png";
+				return "img/default/caballo-n.png";
 				break;
 		}
 	}

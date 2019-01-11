@@ -17,8 +17,6 @@ class Ajedrez{
 
 	protected $_turno;
 
-	public $estilo;
-
 	public function __construct(){
 		
 		// Inicializo el Tablero

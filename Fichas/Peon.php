@@ -4,8 +4,6 @@ class Peon {
 
 	protected $_color;
 
-	public $estilo;
-
 	public function __construct($color) {
 		$this->_color = $color;
 	}
@@ -21,11 +19,11 @@ class Peon {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/peon-b.png";
+				return "img/default/peon-b.png";
 			break;
 			
 			case 'negro':
-				return "img/peon-n.png";
+				return "img/default/peon-n.png";
 			break;
 		}
 	}

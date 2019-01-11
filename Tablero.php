@@ -40,7 +40,7 @@ class Tablero{
 				 if($this->_matriz[$fila][$columna] == ''){
 					echo "<img id='".$fila."-".$columna."' src='img/blanco.png'/>";
 				} else {
-					echo "<img id='".$fila."-".$columna."-".$this->_matriz[$fila][$columna]->getColor()."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' />";
+					echo "<img class='ficha' id='".$fila."-".$columna."-".$this->_matriz[$fila][$columna]->getColor()."' src='".$this->_matriz[$fila][$columna]->dibujarFicha()."' />";
 				}
 				echo '</td>';
 			}

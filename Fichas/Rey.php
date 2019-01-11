@@ -4,8 +4,6 @@ class Rey {
 	
 	protected $_color;
 
-	public $estilo;
-
 	public function __construct($color) {
 		$this->_color = $color;
 	}
@@ -21,11 +19,11 @@ class Rey {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/rey-b.png";
+				return "img/default/rey-b.png";
 				break;
 			
 			case 'negro':
-				return "img/rey-n.png";
+				return "img/default/rey-n.png";
 				break;
 		}
 	}

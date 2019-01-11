@@ -18,11 +18,11 @@ class Torre {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/torre-b.png";
+				return "img/default/torre-b.png";
 				break;
 			
 			case 'negro':
-				return "img/torre-n.png";
+				return "img/default/torre-n.png";
 				break;
 		}
 	}

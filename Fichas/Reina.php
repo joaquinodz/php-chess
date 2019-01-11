@@ -19,11 +19,11 @@ class Reina {
 	public function dibujarFicha() {
 		switch ($this->_color) {
 			case 'blanco':
-				return "img/reina-b.png";
+				return "img/default/reina-b.png";
 				break;
 			
 			case 'negro':
-				return "img/reina-n.png";
+				return "img/default/reina-n.png";
 				break;
 		}
 	}
