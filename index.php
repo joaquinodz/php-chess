@@ -12,7 +12,10 @@ if (isset($_GET['reset'])) {
 
 if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '' || isset($_POST['reiniciar'])) {
 	$ajedrez = new Ajedrez();
-} else {
+} else if(isset($_POST['retroceder_jugafa'])){
+	$ajedrez = $_SESSION['jugadas'][$_POST['retroceder_jugafa']];
+}else{
+
 	$ajedrez = $_SESSION['ajedrez'];
 }
 
@@ -40,10 +43,15 @@ $_SESSION['ajedrez'] = $ajedrez;
 	<br />
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<h1 class="text-center" style="color: #41e8f4; font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; ">Ajedrez Online</h1>
+			<div class="col-md-4">
 				<div class="alert alert-info" style="width: 11%;float: left;">Turno: <?php echo $ajedrez->getTurno(); ?></div>
+</div>
+			<div class="col-md-4">
+				<h1 class="text-center" style="color: #41e8f4; font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; ">Ajedrez Online</h1>
+				
 			</div>
+			<div class="col-md-4">
+</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">

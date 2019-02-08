@@ -99,12 +99,30 @@ class Reina {
 		$to_x = $Hasta[0];
 		$to_y = $Hasta[1];
 
-		// TODO: Agregar mas restricciones
-		// Aparte del movimiento del caballo, puede hacer todos los demás (movimientos)
-		if (($to_x == $from_x+2 || $to_x == $from_x-2) && ($to_y == $from_y+1 || $to_y == $from_y-1)) {
-			return FALSE;
-		} else {
+		// Si se mueve para adelante
+		if ($from_x>$to_x && $from_y == $to_y) {
 			return TRUE;
+		}
+
+		// Si se mueve para atras
+		if ($from_x<$to_x && $from_y == $to_y) {
+			return TRUE;
+		}
+
+		// Si se mueve para la izquierda
+		if ($from_x == $to_x && $from_y > $to_y) {
+			return TRUE;
+		}
+
+		// Si se mueve para la izquierda
+		if ($from_x == $to_x && $from_y < $to_y) {
+			return TRUE;
+		}
+
+		if (abs($to_x - $from_x) == abs($to_y - $from_y)) {
+			return TRUE;
+		} else {
+			return FALSE;
 		}
 
 	}

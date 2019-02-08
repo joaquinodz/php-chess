@@ -54,10 +54,19 @@ class Tablero{
 	}
 
 	public function checkFichas($ficha,$Prev,$Next) {
+		// Por seguridad y que no se me rompa la pc
+		$iteraciones = 0;
+
 		// Esta es la proxima posicion disponible para moverse
 		$posActual = $ficha::closestPos($Prev,$Next);
+		
+		$Next = explode('-', $Next);
+		$NextStr = $Next[0]."-".$Next[1];
+	
 		$return = TRUE;
-		while ($posActual != $Next) {
+		while ($posActual != $NextStr) {
+
+			$iteraciones++;
 
 			$pos = explode('-', $posActual);
 
@@ -66,8 +75,12 @@ class Tablero{
 				break;
 			}
 
-			$posActual = $ficha::closestPos($posActual,$Next);
+			$posActual = $ficha::closestPos($posActual,$NextStr);
 			
+			if ($iteraciones == 9) {
+				die($posActual ."==". $NextStr);
+			}
+
 		}
 
 		return $return;
