@@ -36,7 +36,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Ajedrez</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 
 <body style="background-image:url('img/background.png')">
@@ -45,13 +45,14 @@ $_SESSION['ajedrez'] = $ajedrez;
 		<div class="row">
 			<div class="col-md-4">
 				<div class="alert alert-info" style="width: 11%;float: left;">Turno: <?php echo $ajedrez->getTurno(); ?></div>
-</div>
+			</div>
 			<div class="col-md-4">
 				<h1 class="text-center" style="color: #41e8f4; font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; ">Ajedrez Online</h1>
 				
 			</div>
 			<div class="col-md-4">
-</div>
+				<?php include 'settings.php'; ?>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -62,6 +63,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
 
@@ -73,7 +75,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 	} else {
 		alert("Tu navegador no soporta la API de Almacenamiento Local caracteristica de HTML5. Por favor, actualizá tu navegador.");
 	}
-		
+
 	// Si se elige el tema por-defecto, ni me molesto en hacer el loop
 	if (sessionStorage != 'default') {
 		// Cambio el estilo de las fichas
@@ -82,7 +84,17 @@ $_SESSION['ajedrez'] = $ajedrez;
 			$(this).attr('src', ''+source[0]+'/'+sessionStorage.Tema+'/'+source[2]+'');
 		});
 	}
-		
+
+	// Cargamos la lista de temas disponibles.
+	$.getJSON( "img/list_themes.php", function( data ) {
+		var Temas = data.Temas_Disponibles.split("-")
+		var items = [];
+
+		$.each(Temas, function(index, val) {
+			$("#styles").html("<option id='" + val + "'>" + val + "</option>")
+		});
+	});
+
 	// Cargar valores iniciales
 	PrimeraPos = null
 	SegundaPos = null
@@ -100,7 +112,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 				alert("¡Esperá a que sea tu turno!")
 				return false; 
 			}
-				
+
 			// Guardo la pos
 			PrimeraPos = event.target.id;
 			console.log("Posición Inicial: " + PrimeraPos);
@@ -115,7 +127,7 @@ $_SESSION['ajedrez'] = $ajedrez;
 				url: 'index.php',
 				method: 'POST',
 				data: { PrevPos: PrimeraPos, 
-						PostPos: SegundaPos },
+					PostPos: SegundaPos },
 					success: function(response) {
 						var obj = jQuery.parseJSON( response );
 						if(obj.jaque == true){
@@ -125,8 +137,14 @@ $_SESSION['ajedrez'] = $ajedrez;
 						location.reload();
 					}
 				});
-			}
-		});
+		}
 	});
+
+	// Botón reiniciar partida.
+	$("#resetGame").click(function(event) {
+		location.href = document.location  + "?reset"
+	});
+
+});
 </script>
 </html>
