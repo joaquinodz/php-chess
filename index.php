@@ -13,11 +13,15 @@ if (isset($_GET['reset'])) {
 if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '' || isset($_POST['reiniciar'])) {
 	$ajedrez = new Ajedrez();
 }else{
-
 	$ajedrez = $_SESSION['ajedrez'];
 }
 
 if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
+	
+	// Guardo una copia por si se decide deshacer la jugada.
+	$_SESSION['rollback'] = $ajedrez;
+
+	// Muevo la ficha.
 	$result = $ajedrez->mover($_POST['PrevPos'],$_POST['PostPos']);
 	$_SESSION['ajedrez'] = $ajedrez;
 	echo json_encode($result);
@@ -73,14 +77,19 @@ $_SESSION['ajedrez'] = $ajedrez;
 	// Esta es la version JavaScript de $_SESSION[] (PHP)
 	// En este caso, verifico si soporta esta API
 	if (typeof(Storage) !== "undefined") {
-		// Declaro una variable inicial
-		sessionStorage.Tema = 'default';
+		if (typeof(sessionStorage.Tema) == "undefined") {
+			// Declaro una variable inicial
+			sessionStorage.Tema = 'Default';
+			console.log(sessionStorage.Tema)
+		} else { 
+			console.log("Tema Actual: " + sessionStorage.Tema)
+		}
 	} else {
 		alert("Tu navegador no soporta la API de Almacenamiento Local caracteristica de HTML5. Por favor, actualizá tu navegador.");
 	}
 
 	// Si se elige el tema por-defecto, ni me molesto en hacer el loop
-	if (sessionStorage != 'default') {
+	if (sessionStorage.Tema != 'Default') {
 		// Cambio el estilo de las fichas
 		$("img.ficha").each(function() {
 			var source = $(this).attr('src').split("/");
@@ -94,9 +103,25 @@ $_SESSION['ajedrez'] = $ajedrez;
 
 		$.each(Temas, function(index, val) {
 			console.log("Tema Disponible: " + val)
-			$("#styles").html("<option id='" + val + "'>" + val + "</option>")
+			$("#styles").append("<option id='" + val + "'>" + val + "</option>");
 		});
+
+		$("#styles").val(sessionStorage.Tema)
 	});
+
+	// Seteamos el tema.
+	$("#styles").change(function(event) {
+		event.preventDefault();
+
+		sessionStorage.Tema = $("#styles").val()
+		location.href = document.location
+	});
+
+	// Botón reiniciar partida.
+	$("#resetGame").click(function(event) {
+		location.href = document.location  + "?reset"
+	});
+
 
 	// Cargar valores iniciales
 	PrimeraPos = null
@@ -141,11 +166,6 @@ $_SESSION['ajedrez'] = $ajedrez;
 					}
 				});
 		}
-	});
-
-	// Botón reiniciar partida.
-	$("#resetGame").click(function(event) {
-		location.href = document.location  + "?reset"
 	});
 });
 </script>

@@ -27,12 +27,6 @@
       <input type="submit" name="undo" id="undo" class="btn btn-primary btn-lg btn-block" value="Deshacer Movimiento"></input>
       <button type="button" id="resetGame" class="btn btn-danger btn-lg btn-block">Reiniciar Partida</button>
     </div>
-
-    <!-- Footer -->
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      <button type="button" class="btn btn-primary">Guardar</button>
-    </div>
     
   </div>
 </div>

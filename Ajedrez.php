@@ -134,8 +134,6 @@ class Ajedrez{
 		$pos_posterior = explode("-", $Posterior);
 
 		$ficha = $this->_tablero->obtenerFicha($pos_anterior[0],$pos_anterior[1]);
-		
-		$_SESSION['rollback'] = $_SESSION['ajedrez'];
 
 		// ¿ Es mi turno ?
 		if ($ficha->getColor() == $this->_turno) {
