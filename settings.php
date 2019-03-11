@@ -21,11 +21,11 @@
     <!-- Body -->
     <div class="modal-body">
       <label for="styles"></label>
-      <select name="styles" id="styles" class="custom-select">
-      </select>
+      <select name="styles" id="styles" class="custom-select"></select>
       <br />
       <br />
-      <button type="button" id="resetGame" class="btn btn-primary btn-lg btn-block">Reiniciar Partida</button>
+      <input type="submit" name="undo" id="undo" class="btn btn-primary btn-lg btn-block" value="Deshacer Movimiento"></input>
+      <button type="button" id="resetGame" class="btn btn-danger btn-lg btn-block">Reiniciar Partida</button>
     </div>
 
     <!-- Footer -->

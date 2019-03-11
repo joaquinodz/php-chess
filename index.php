@@ -12,8 +12,6 @@ if (isset($_GET['reset'])) {
 
 if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '' || isset($_POST['reiniciar'])) {
 	$ajedrez = new Ajedrez();
-} else if(isset($_POST['retroceder_jugafa'])){
-	$ajedrez = $_SESSION['jugadas'][$_POST['retroceder_jugafa']];
 }else{
 
 	$ajedrez = $_SESSION['ajedrez'];
@@ -25,6 +23,11 @@ if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
 	echo json_encode($result);
 	die();
 }
+
+if (isset($_POST['undo'])) {
+	$_SESSION['ajedrez'] = $_SESSION['rollback'];
+}
+
 
 $_SESSION['ajedrez'] = $ajedrez;
 ?>
@@ -88,9 +91,9 @@ $_SESSION['ajedrez'] = $ajedrez;
 	// Cargamos la lista de temas disponibles.
 	$.getJSON( "img/list_themes.php", function( data ) {
 		var Temas = data.Temas_Disponibles.split("-")
-		var items = [];
 
 		$.each(Temas, function(index, val) {
+			console.log("Tema Disponible: " + val)
 			$("#styles").html("<option id='" + val + "'>" + val + "</option>")
 		});
 	});
@@ -144,7 +147,6 @@ $_SESSION['ajedrez'] = $ajedrez;
 	$("#resetGame").click(function(event) {
 		location.href = document.location  + "?reset"
 	});
-
 });
 </script>
 </html>
