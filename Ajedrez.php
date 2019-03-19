@@ -17,6 +17,8 @@ class Ajedrez{
 
 	protected $_turno;
 
+	public $jugadas = 0;
+
 	public function __construct(){
 		
 		// Inicializo el Tablero
@@ -168,6 +170,7 @@ class Ajedrez{
 							$this->cambiarTurno();
 							$this->_jaque = $this->checkGlobalJaque();
 							$this->actualizarPosRey($ficha,$Posterior);
+							$this->jugadas = $this->jugadas++;
 							return array('operacion'=>TRUE,'jaque'=>$this->_jaque, 'mensaje' => '');
 						}
 					}

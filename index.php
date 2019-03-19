@@ -4,21 +4,23 @@ require_once 'Ajedrez.php';
 
 session_start();
 
-		// Por si se rompe algo
+// Por si se rompe algo
 if (isset($_GET['reset'])) {
 	unset($_SESSION['ajedrez']);
 	header("Location: index.php");
 }
 
-if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '' || isset($_POST['reiniciar'])) {
+if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '') {
 	$ajedrez = new Ajedrez();
-}else{
+	//$_SESSION['rollback'] =  $ajedrez;
+} elseif (isset($_POST['undo'])) {
+	$ajedrez = $_SESSION['rollback'];
+} else {
 	$ajedrez = $_SESSION['ajedrez'];
 }
 
 if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
-	
-	// Guardo una copia por si se decide deshacer la jugada.
+
 	$_SESSION['rollback'] = $ajedrez;
 
 	// Muevo la ficha.
@@ -28,12 +30,10 @@ if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
 	die();
 }
 
-if (isset($_POST['undo'])) {
-	$_SESSION['ajedrez'] = $_SESSION['rollback'];
-}
-
-
 $_SESSION['ajedrez'] = $ajedrez;
+echo "<pre>";
+print_r($_SESSION['rollback']);
+echo "</pre>";
 ?>
 
 <!DOCTYPE html>
