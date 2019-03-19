@@ -12,7 +12,7 @@ if (isset($_GET['reset'])) {
 
 if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '') {
 	$ajedrez = new Ajedrez();
-	//$_SESSION['rollback'] =  $ajedrez;
+	$_SESSION['rollback'] = $ajedrez;
 } elseif (isset($_POST['undo'])) {
 	$ajedrez = $_SESSION['rollback'];
 } else {
@@ -20,7 +20,7 @@ if (!isset($_SESSION['ajedrez']) || $_SESSION['ajedrez'] == '') {
 }
 
 if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
-
+	
 	$_SESSION['rollback'] = $ajedrez;
 
 	// Muevo la ficha.
@@ -31,9 +31,7 @@ if (isset($_POST['PrevPos']) && isset($_POST['PostPos'])) {
 }
 
 $_SESSION['ajedrez'] = $ajedrez;
-echo "<pre>";
-print_r($_SESSION['rollback']);
-echo "</pre>";
+
 ?>
 
 <!DOCTYPE html>
